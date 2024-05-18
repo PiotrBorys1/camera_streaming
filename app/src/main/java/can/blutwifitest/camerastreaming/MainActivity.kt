@@ -24,14 +24,21 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
@@ -49,12 +56,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.layout.onPlaced
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -312,6 +322,7 @@ class MainActivity : ComponentActivity() {
     fun DialogPutPhoneNumber(
         onDismissRequest: () -> Unit
     ) {
+
         Dialog(onDismissRequest = { onDismissRequest() }) {
 
             Column( modifier = Modifier
@@ -321,8 +332,14 @@ class MainActivity : ComponentActivity() {
                 .border(BorderStroke(2.dp, Color.Red)))
             {
                 Text(text = resources.getString(R.string.put_phone_num), fontSize = 20.sp, modifier = Modifier.padding(10.dp))
-                Box(modifier= Modifier.fillMaxWidth()) {
+                Box(modifier= Modifier
+                    .fillMaxWidth()
+                    .onSizeChanged { size ->
+
+                    }) {
+
                     TextField(
+                        maxLines = 1,
                         modifier = Modifier.align(Alignment.Center),
                         textStyle = TextStyle(
                             color = Color.Black,
@@ -370,6 +387,7 @@ class MainActivity : ComponentActivity() {
     fun DialogPutIPAdress(
         onDismissRequest: () -> Unit
     ) {
+
         Dialog(onDismissRequest = { onDismissRequest() }) {
 
             Column( modifier = Modifier
@@ -381,7 +399,9 @@ class MainActivity : ComponentActivity() {
                 Text(text = resources.getString(R.string.IP_address), fontSize = 20.sp, modifier = Modifier.padding(10.dp))
                 Box(modifier= Modifier.fillMaxWidth()) {
                     TextField(
-                        modifier= Modifier.align(Alignment.Center),
+                        maxLines = 1,
+                        modifier= Modifier
+                            .align(Alignment.Center),
                         textStyle = TextStyle(
                         color = Color.Black,
                         fontSize = 20.sp,
