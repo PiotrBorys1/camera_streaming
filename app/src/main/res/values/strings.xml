@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CameraStreaming</string>
+    <string name="ChsifTrRCv">Choose if device is transmitter or receiver</string>
+    <string name="Confirm">Confirm</string>
+    <string name="cant_find_bluetooth">Can not find Bluetooth</string>
+    <string name="StartStrm">Start streaming</string>
+    <string name="wrong_phone">Wrong phone number</string>
+    <string name="put_phone_num">Put phone number of stream target (there will be send IP address of transmitter)</string>
+    <string name="phone_num">Phone number</string>
+    <string name="try_again">Try again</string>
+    <string name="IP_address">Put IP address or wait for message from transmitter with its IP address (recommended)</string>
+    <string name="transmitter">Transmitter</string>
+    <string name="receiver">Receiver</string>
+</resources>

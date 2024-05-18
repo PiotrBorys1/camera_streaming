@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CameraStreaming</string>
+    <string name="ChsifTrRCv">Wybierz czy urządzenie jest nadajnikiem, czy odbiornikiem</string>
+    <string name="Confirm">Dalej</string>
+    <string name="cant_find_bluetooth">Nie można znaleźć Bluetooth</string>
+    <string name="StartStrm">Zacznij streamowanie</string>
+    <string name="wrong_phone">Zły numer telefonu</string>
+    <string name="put_phone_num">Wpisz numer telefonu na który przesyłany będzie obraz (poprzez SMS zostanie wysłany tam adres IP nadajnika)</string>
+    <string name="phone_num">Numer telefonu</string>
+    <string name="try_again">Spróbuj ponownie</string>
+    <string name="IP_address">Wpisz adres IP lub poczekaj na SMS od nadajnika z jego adresem IP (zalecane)</string>
+    <string name="transmitter">Nadajnik</string>
+    <string name="receiver">Odbiornik</string>
+</resources>
