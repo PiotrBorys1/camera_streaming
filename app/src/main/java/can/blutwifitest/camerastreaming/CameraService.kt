@@ -30,13 +30,9 @@ class CameraService : Service() {
 
 lateinit var ImageREADERR: ImageReader
 lateinit var CameraDev:CameraDevice
-lateinit var ImageByteArray:ByteArray
 lateinit var CaptureRequesst:CaptureRequest
-val MESSAGE_PROCESS_UPCOMING_PHOTO=-10
-
-var orientationAngle:Int?=0
-    val threadforHandler=ThreadCameraForHandler()
-    val cameraStateCallback=object :CameraDevice.StateCallback(){
+val threadforHandler=ThreadCameraForHandler()
+val cameraStateCallback=object :CameraDevice.StateCallback(){
 
 
         override fun onOpened(p0: CameraDevice) {
@@ -46,7 +42,6 @@ var orientationAngle:Int?=0
             ImageREADERR.setOnImageAvailableListener(onImageAvailableListener, threadforHandler.mHandler)
             try {
                 val outputConfig=OutputConfiguration(ImageREADERR.surface)
-                //outputConfig.streamUseCase=CameraMetadata.SCALER_AVAILABLE_STREAM_USE_CASES_PREVIEW.toLong()
                 val exetutror=Executor {r->Thread(r).start()}
                 CameraDev.createCaptureSession(SessionConfiguration(SessionConfiguration.SESSION_REGULAR,
                     mutableListOf(outputConfig),exetutror,sessionStateCallback
@@ -101,7 +96,6 @@ var orientationAngle:Int?=0
             val builder = CameraDev.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)
             builder.addTarget(ImageREADERR.surface)
             builder.set(CaptureRequest.CONTROL_CAPTURE_INTENT,CaptureRequest.CONTROL_CAPTURE_INTENT_PREVIEW)
-           // builder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, Range(17,35))
             builder.set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_AUTO);
             CaptureRequesst=builder.build()
             p0.setRepeatingRequest(CaptureRequesst, captureCallbacck,threadforHandler.mHandler)
@@ -124,7 +118,6 @@ var orientationAngle:Int?=0
             result: TotalCaptureResult
         ) {
             super.onCaptureCompleted(session, request, result)
-            //session.capture(CaptureRequesst,this,threadforHandler.mHandler)
 
         }
     }
@@ -141,8 +134,8 @@ var orientationAngle:Int?=0
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
         val CameraManager:CameraManager=getSystemService(CAMERA_SERVICE) as CameraManager
-        var choosenID:String=""
-       // try{
+        var choosenID=""
+        try{
             val CameraidList=CameraManager.cameraIdList
             for (id in CameraidList)
             {
@@ -152,20 +145,15 @@ var orientationAngle:Int?=0
                   choosenID=id
                  break
                 }
-              /*orientationAngle=cameraCharacterictics.get(CameraCharacteristics.SENSOR_ORIENTATION)
-                if (orientationAngle==null)
-                {
-                    orientationAngle=0
-                }*/
             }
 
             threadforHandler.start()
             CameraManager.openCamera(choosenID, cameraStateCallback, null)
-       /* }
+        }
         catch (e:Exception)
         {
 
-        }*/
+        }
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -173,11 +161,10 @@ var orientationAngle:Int?=0
      override fun onDestroy() {
         super.onDestroy()
 
-        //threadreadwrite.cancel()
-        try {
+        try
+        {
             CameraDev.close()
             ImageREADERR.close()
-
         }
         catch(e:Exception)
         {

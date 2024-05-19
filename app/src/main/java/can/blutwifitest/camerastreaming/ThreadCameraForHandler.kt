@@ -12,16 +12,9 @@ import kotlin.math.absoluteValue
 
 class ThreadCameraForHandler:Thread() {
     var mHandler: Handler? = null
-
     override fun run() {
         Looper.prepare()
-        mHandler = object : Handler(Looper.myLooper()!!) {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
-
-            }
-
-        }
+        mHandler = object : Handler(Looper.myLooper()!!) {}
         Looper.loop()
     }
 }

@@ -67,8 +67,6 @@ class ServerActivity : AppCompatActivity() {
     var audiobytearraysize=15000
     val audioSampleRate=44100
     val audioBufferMaxSize=50000
-    lateinit var audiorecord: AudioRecord
-    lateinit var runnablewaitGiff:Runnable
     var flagaudiopermissiongranted=false
     lateinit var serverthread:ServerThread
 
@@ -126,10 +124,10 @@ class ServerActivity : AppCompatActivity() {
         val backCallback=object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
 
-                //threadreadwrite.cancel()
+
                 try {
-                    audiorecord.stop()
-                    audiorecord.release()
+                    serverthread.audiorecord.stop()
+                    serverthread.audiorecord.release()
                 }
                 catch(e:Exception)
                 {

@@ -506,7 +506,7 @@ class MainActivity : ComponentActivity() {
         val inte = Intent(
             this@MainActivity,
             ServerActivity::class.java
-        ).putExtra("IsWifiDevice", false)
+        )
         this@MainActivity.startActivity(inte)
 
 

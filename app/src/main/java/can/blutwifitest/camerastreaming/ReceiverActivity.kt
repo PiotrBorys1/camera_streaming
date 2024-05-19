@@ -57,19 +57,14 @@ import androidx.compose.ui.Modifier
 import java.net.Socket
 
 class ReceiverActivity : ComponentActivity() {
-    val MESSAGE_RESPONSE_STREAM_VIDEO: Int = 2
+
     lateinit var matrixImageStreaming:Matrix
     var SocketWIFI: Socket?=null
     lateinit var handler: Handler
-    var shownextframe by mutableStateOf(false)
     val CONNECTION_ESTABLISHED=1
     var connectionEstablished=false
     var muatblesharedflowofByearrayImage=MutableSharedFlow<ByteArray>(replay = 1)
     var muatblesharedflowofByearrayAudio=MutableSharedFlow<ByteArray>(replay = 1)
-    var cansendnextquery=false
-    var time_between_frames=SystemClock.elapsedRealtime()
-    val frame_rate=30L
-    var texttest by mutableStateOf<String>("")
     lateinit var audiotrack:AudioTrack
     lateinit var bitmapimagearray:Bitmap
     var bitmapStream by mutableStateOf<Bitmap?>(null)
@@ -107,23 +102,6 @@ class ReceiverActivity : ComponentActivity() {
         matrixImageStreaming= Matrix()
         matrixImageStreaming.postRotate(90f)
 
-        /*corountScop.launch {
-
-                while (true) {
-                    sleep(50)
-                    try
-                    {
-                        bitmapStream=MutableMAPOfVideBitmaps[0]
-                        MutableMAPOfVideBitmaps.removeAt(0)
-                    }
-                    catch(e:Exception)
-                    {
-
-                    }
-                }
-
-            }*/
-
 
             corountScop.launch {
 
@@ -145,9 +123,6 @@ class ReceiverActivity : ComponentActivity() {
 
             }
             corountScop.launch{
-               /* muatblesharedflowofByearrayImage.collect{
-                    value->texttest=value.toString()
-                }*/
                     muatblesharedflowofByearrayImage.collect { value ->
 
                       try {
@@ -178,11 +153,6 @@ class ReceiverActivity : ComponentActivity() {
             }
 
 
-
-
-
-
-
         handler=object:Handler(Looper.getMainLooper())
         {
             override fun handleMessage(msg: Message) {
@@ -195,7 +165,7 @@ class ReceiverActivity : ComponentActivity() {
                         var timetoSleep=0L
                         while (true) {
                             timeOfFunctionStart=SystemClock.elapsedRealtime()
-                            ThreadReadWrite(SocketWIFI, handler, this@ReceiverActivity).run()
+                            ThreadReadWrite(SocketWIFI, this@ReceiverActivity).run()
                             timetOFFunction=SystemClock.elapsedRealtime()-timeOfFunctionStart
                             if (timetOFFunction<=0 || timetOFFunction>=35)
                             {
@@ -213,71 +183,33 @@ class ReceiverActivity : ComponentActivity() {
 
                     connectionEstablished=true
                 }
-               /* else if(msg.what==MESSAGE_RESPONSE_STREAM_VIDEO) {
-                    corountScop.launch{ ThreadReadWrite(SocketWIFI, handler,this@ReceiverActivity).run()}
-                        /*corountScop.launch {
-                            try {
-
-                                val mysingl = MySingleton.getInstance()
-                                val audiobytarray = mysingl.audioByteArraytoPlay
-                                audiotrack.write(
-                                    audiobytarray,
-                                    0,
-                                    audiobytarray.size,
-                                    AudioTrack.WRITE_NON_BLOCKING
-                                )
-                                val ImageByteArray =
-                                    mysingl.VideoImageBytearray //msg.obj as ByteArray
-
-                                    bitmapimagearray = BitmapFactory.decodeByteArray(
-                                        ImageByteArray,
-                                        0,
-                                        ImageByteArray.size
-                                    )
-                                    bitmapimagearray = Bitmap.createBitmap(
-                                        bitmapimagearray,
-                                        0,
-                                        0,
-                                        bitmapimagearray.width,
-                                        bitmapimagearray.height,
-                                        matrixImageStreaming,
-                                        true
-                                    )
-
-                                bitmapStream=bitmapimagearray
-
-                            } catch (e: Exception) {
-
-                            }
-                        }*/
-
-
-                }*/
             }
         }
 
-Thread {
-    try {
-        SocketWIFI =
-            Socket(MySingleton.getInstance().wifiIP, MySingleton.getInstance().SocketPort, null, 0)
-        if (SocketWIFI!!.isConnected) {
-            SocketWIFI!!.soTimeout=2000
-            runOnUiThread {handler.sendMessage(Message.obtain(handler, CONNECTION_ESTABLISHED))}
-        } else {
-            runOnUiThread {
+    Thread {
+        try {
+         SocketWIFI =
+              Socket(MySingleton.getInstance().wifiIP, MySingleton.getInstance().SocketPort, null, 0)
+                 if (SocketWIFI!!.isConnected) {
+                SocketWIFI!!.soTimeout=2000
+                 runOnUiThread {handler.sendMessage(Message.obtain(handler, CONNECTION_ESTABLISHED))}
+                } else {
+                 runOnUiThread {
                 val text = getString(R.string.try_again)
                 val duration = Toast.LENGTH_SHORT
                 val toast = Toast.makeText(this, text, duration)
                 toast.show()
+                }
             }
         }
-    }
-    catch (e:Exception)
-    {
+        catch (e:Exception)
+         {
 
-    }
-}.start()
-    }
+         }
+        }.start()
+
+
+}
     
     
     @Composable
@@ -290,12 +222,7 @@ Thread {
         
     }
 
-    @Composable
-    fun WaitScreen()
-    {
-        Text(text = "Wait...")
 
-    }
     
     
 }

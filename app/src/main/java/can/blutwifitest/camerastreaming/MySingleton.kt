@@ -29,10 +29,7 @@ class MySingleton private constructor() {
     var ServerSocket:ServerSocket=ServerSocket(0)
     var GateHostName:String=""
     var StreamCameraImage = ByteArray(0)
-    var flagDoNextPhoto=true
     var ServerActivity:ServerActivity?=null
     var PhotoImageSize=ByteArray(0)
-    var VideoImageBytearray =ByteArray(0)
-    var numberofBytesInAusioByteArray=10000
-    var audioByteArraytoPlay=ByteArray(numberofBytesInAusioByteArray)
+
 }

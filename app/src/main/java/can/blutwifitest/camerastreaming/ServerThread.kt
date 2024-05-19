@@ -22,12 +22,9 @@ import kotlin.math.absoluteValue
 import kotlin.math.min
 
 class ServerThread(val activity:ServerActivity):Thread() {
-    val MESSAGE_FROM_CLIENT=1
     lateinit var socketw: Socket
     lateinit var reader:BufferedReader
-    val MESSAGE_WRITE_DATA=-3
     var  res = ""
-    var counter=0
     var oldAudioTimeStemple=0L
     var audiobytearraysize=15000
     var audioSampleRate=44100
@@ -75,9 +72,6 @@ class ServerThread(val activity:ServerActivity):Thread() {
                 val mysingelo=MySingleton.getInstance()
                 var imgaetSend =mysingelo.PhotoImageSize
                     imgaetSend = imgaetSend.plus(mysingelo.StreamCameraImage)
-
-
-
                  if (flagaudiopermissiongranted) {
                         audiobytearraysize =
                             ((((SystemClock.elapsedRealtime() - oldAudioTimeStemple).toFloat() / 1000f) * audioSampleRate.toFloat()) * 2f).toInt()
